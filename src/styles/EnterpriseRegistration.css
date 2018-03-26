@@ -1,0 +1,146 @@
+  .container{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: linear-gradient(#3db8fa, #2e79ca);
+  }
+  .headImage{
+      margin: 0 50px;
+  }
+  .Num{
+      margin:35px 0 20px;
+      font-size:24px;
+      color:#fff;
+  }
+  .inputNum{
+    background: transparent;
+    border:none;
+    outline:medium;
+    width:80%;
+    display: inline-block;
+    font-size:28px;
+    color:#fff;
+  }
+  .invite{
+    position: relative;
+    padding:82px 0 23px;
+    margin:0 50px;
+    border-bottom:2px solid #68b3ea;
+    font-size:32px;
+    color: #fff;
+  }
+  .getCode{
+    position: relative;
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+    padding:82px 0 23px;
+    margin:0 50px;
+    border-bottom:2px solid #68b3ea;
+    font-size:32px;
+    color: #fff;
+  }
+  .getCode input[type="text"] {
+    background: transparent;
+    border:none;
+    outline:medium;
+    width:80%;
+    display: inline-block;
+    padding:0;
+  }
+  .sendCode{
+      display:inline-block;
+      /* height:54px; */
+      width:184px;
+      padding:0;
+      border:2px solid #fff;
+      border-radius:5px;
+      line-height:54px;
+      text-align: center;
+      font-size:28px;
+      background: transparent;
+      outline:medium;
+  }
+  .noSendCode{
+    display:inline-block;
+      /* height:54px; */
+      width:184px;
+      padding:0;
+      border:2px solid #6bb7ef;
+      border-radius:5px;
+      line-height:54px;
+      text-align: center;
+      font-size:28px;
+      color:#fff;
+      background: transparent;
+      outline:medium;
+      pointer-events: none;
+      cursor: not-allowed;
+      box-shadow: none;
+      /* opacity:0.5; */
+  }
+  .invite input {
+    background: transparent;
+    border:none;
+    outline:medium;
+    width: 90%;
+    display: inline-block;
+    padding:0;
+  }
+  .next{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:94px;
+    width: 100%;
+    margin: 82px auto 0;
+  }
+  .nextStep{
+    /* height:94px; */
+    width: 87%;
+    padding:30px 0;
+    border-radius:4px;
+    text-align: center;
+    /* line-height: 94px; */
+    background: #4eaded;
+    color: #147dd9;
+    font-size:28px; 
+    overflow: hidden; 
+  }
+  .nextCan{
+    /* height:94px; */
+    width: 87%;
+    padding:30px 0;
+    border-radius:4px;
+    text-align: center;
+    /* line-height: 94px; */
+    background: #b2d3ed;
+    color: #147dd9;
+    font-size:28px; 
+    overflow: hidden; 
+  }
+  .inputClass::-webkit-input-placeholder{
+    color: #fff;
+  }
+  .showPhone{
+    display:block;
+    position: absolute;
+    top:23px;
+    left:0;
+    font-size:26px;
+  }
+  .hidePhone{
+    display:none;
+  }
+  .showCode{
+    position:absolute;
+    top:30px;
+    left:0;
+    font-size:26px;
+    color: #fff;
+  }
+  .hideCode{
+    display:none;
+  }

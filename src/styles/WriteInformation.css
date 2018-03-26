@@ -1,0 +1,118 @@
+.container{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: linear-gradient(#3db8fa, #2e79ca);
+  }
+  .getCode{
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+    padding:82px 0 23px;
+    margin:0 50px;
+    border-bottom:2px solid #68b3ea;
+    font-size:32px;
+    color: #fff;
+  }
+  .getCode1{
+    position: relative;
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+    padding:82px 0 23px;
+    margin:0 50px;
+    border-bottom:2px solid #fff;
+    font-size:32px;
+    color: #fff;
+  }
+  .getCode input[type="text"] {
+    background: transparent;
+    border:none;
+    outline:medium;
+    width:60%;
+    display: inline-block;
+    font-size:36px;
+    padding:0;
+  }
+  .getCode1 input[type="text"] {
+    background: transparent;
+    border:none;
+    outline:medium;
+    width:60%;
+    display: inline-block;
+    font-size:36px;
+    padding:0;
+  }
+  .prompt{
+    font-size:24px;
+  }
+  .sendCode{
+      display:inline-block;
+      height:54px;
+      width:184px;
+      padding:0;
+      border:2px solid #fff;
+      border-radius:3px;
+      line-height:54px;
+      text-align: center;
+      font-size:28px;
+      background: transparent;
+      outline:medium;
+  }
+  .next{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:94px;
+    width: 100%;
+    margin: 82px auto 0;
+  }
+  .nextStep{
+    /* height:94px; */
+    width: 87%;
+    padding:30px 0;
+    border-radius:4px;
+    text-align: center;
+    /* line-height: 94px; */
+    background: #4eaded;
+    color: #147dd9;
+    font-size:28px;
+    overflow: hidden;  
+  }
+  .nextCan{
+    /* height:94px; */
+    width: 87%;
+    padding:30px 0;
+    border-radius:4px;
+    text-align: center;
+    /* line-height: 94px; */
+    background: #b2d3ed;
+    color: #147dd9;
+    font-size:28px; 
+    overflow: hidden; 
+  }
+  .inputClass::-webkit-input-placeholder {
+    color:#fff;
+  }
+  .showCompany{
+    display:block;
+    position: absolute;
+    top:23px;
+    left:0;
+    font-size:26px;
+  }
+  .hideCompany{
+    display:none;
+  }
+  .showName{
+    position:absolute;
+    top:30px;
+    left:0;
+    font-size:26px;
+    color: #fff;
+  }
+  .hideName{
+    display:none;
+  }

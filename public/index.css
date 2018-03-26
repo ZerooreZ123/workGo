@@ -1,0 +1,67 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #EEE;
+  font-size: 14px;
+}
+
+
+/*路由切换动画——左移动*/
+
+.left-enter {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10000;
+  opacity: 1;
+  transform: translate3d(100%, 0, 0);
+}
+
+.left-enter.left-enter-active {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: all 250ms ease-out;
+}
+
+.left-leave {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.left-leave.left-leave-active {
+  opacity: 1;
+  transform: translate3d(-100%, 0, 0);
+  transition: all 250ms ease-out;
+}
+
+
+/*路由切换动画——右移动*/
+
+
+.right-enter {
+  transform: translate3d(-100%, 0, 0);
+}
+
+.right-enter.right-enter-active {
+  transform: translate3d(0, 0, 0);
+  transition: all 250ms ease-out;
+}
+
+.right-leave {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 10000;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.right-leave.right-leave-active {
+  opacity: 1;
+  transform: translate3d(100%, 0, 0);
+  transition: all 250ms ease-out;
+}

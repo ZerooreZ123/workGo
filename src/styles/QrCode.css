@@ -1,0 +1,40 @@
+.container{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: #FFF;
+  }
+  .content{
+    padding:0 48px;
+  }
+  .codeWrap{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .hideCode{
+    display:none;
+  }
+  .imgSize{
+    width:256px;
+    height: 256px;
+  }
+  .code{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width:340px;
+    height:340px;
+    margin-top:284px;
+    border-radius:8px;
+    background:#fff;
+    box-shadow: 0 0 10px #e7e7e7;
+  
+  }
+  .text{
+    margin-top:25px;
+    font-size:28px;
+    color:#797979;
+  }
