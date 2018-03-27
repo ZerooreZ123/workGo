@@ -30,8 +30,7 @@ const API = {
   judge:'judge.do',                                       //验证考勤机是否被注册
   judgeDevice:'judgeDevice.do',
   attention:'attention.do',
+  judgeUser:'getUser.do',                                //注册判断用户
 };
-  
-// export { admin ,server
-// }
+
 export default API

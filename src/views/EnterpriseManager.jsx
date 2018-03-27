@@ -166,23 +166,6 @@ class EnterpriseManager extends Component {
            window.index = i
     }
     scan() {                         //扫一扫
-        window.wx.config({
-            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-            appId: this.state.result.appId, // 必填，公众号的唯一标识
-            timestamp: this.state.result.timestamp, // 必填，生成签名的时间戳
-            nonceStr: this.state.result.nonceStr, // 必填，生成签名的随机串
-            signature: this.state.result.signature,// 必填，签名
-            jsApiList: ['scanQRCode'] // 必填，需要使用的JS接口列表
-        });
-        window.wx.ready(()=>{
-            window.wx.scanQRCode({
-                needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                success: function (res) {
-                    var result = res.resultStr; 
-                }
-            });
-        })
     }
     async getWX() {                   //获取微信签名等信息
         const result = await XHR.post(window.admin + API.getSignature);

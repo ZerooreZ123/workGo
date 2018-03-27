@@ -63,10 +63,23 @@ async sendSms() {                  //获取验证码
         window.sessionStorage.setItem("phone",this.state.inputText); 
     }
 }
+async judgeUser() {
+    const result = await XHR.post(window.main + API.judgeUser,{
+        phone:this.state.inputText,
+        LoginName:this.props.match.params.loginName
+    });
+    const data = JSON.parse(result);
+    if(data.success === true) {
+        this.props.history.replace('/inviteCodeDetail')
+    }else{
+        alert(data.msg)
+    }
+}
 goToNextStep() {
    if((this.state.inputText !== '') && (this.state.inputValue !== '')) {
         if(this.state.inputValue === this.state.code) {
-            this.props.history.replace('/inviteCodeDetail')
+            this.judgeUser();
+            // this.props.history.replace('/inviteCodeDetail')
         }else{
             alert("请输入正确的验证码")
         }
