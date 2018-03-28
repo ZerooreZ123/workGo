@@ -48,17 +48,26 @@ async goToNextStep() {          //下一步
 async judgeUser() {
     const result = await XHR.post(window.main + API.judgeUser,{
         phone:this.state.inputPhone,
-        LoginName:this.props.match.params.loginName
+        loginName:this.props.match.params.loginName
     });
-    const data = JSON.parse(result);
-    if(data.success === true) {
-        this.props.history.replace('/writeInformation');
-        window.sessionStorage.setItem('serialNumber',this.props.match.params.serialNumber);
-        window.sessionStorage.setItem('LoginName',this.props.match.params.loginName);
-        window.sessionStorage.setItem("Phone",this.state.inputPhone);
-    }else{
-        alert(data.msg)
-    }
+    const data = JSON.parse(result).data;
+        if(JSON.parse(result).success === "T"){
+            if(data.hasOwnProperty('companyid')) {
+                if(data.roleid === '2'){
+                    this.props.history.replace('./addAttendanceMachine/'+this.props.match.params.serialNumber +'/'+ data.companyName +'/'+data.name +'/'+ data.phone + '/'+data.loginName )  
+                }else{
+                    alert('无权限')
+                }
+            }else{
+                this.props.history.replace('/writeInformation');
+                window.sessionStorage.setItem('serialNumber',this.props.match.params.serialNumber);
+                window.sessionStorage.setItem('LoginName',this.props.match.params.loginName);
+                window.sessionStorage.setItem("Phone",this.state.inputPhone);
+            }
+        }else{
+            alert(JSON.parse(result).msg);
+        }
+
 }
 async sendSms() {                  //获取验证码
     if(!(/^1[34578]\d{9}$/.test(this.state.inputPhone))){

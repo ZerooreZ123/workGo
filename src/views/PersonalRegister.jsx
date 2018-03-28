@@ -66,13 +66,17 @@ async sendSms() {                  //获取验证码
 async judgeUser() {
     const result = await XHR.post(window.main + API.judgeUser,{
         phone:this.state.inputText,
-        LoginName:this.props.match.params.loginName
+        loginName:this.props.match.params.loginName
     });
-    const data = JSON.parse(result);
-    if(data.success === true) {
-        this.props.history.replace('/inviteCodeDetail')
+    const data = JSON.parse(result).data;
+    if(JSON.parse(result).success === "T"){
+        if(data.hasOwnProperty('companyid') && data.companyid !== '') {
+            this.props.history.replace('./userCenter/'+this.props.match.params.loginName +'/'+ data.companyid )  
+        }else{
+            this.props.history.replace('/inviteCodeDetail')
+        }
     }else{
-        alert(data.msg)
+        alert(JSON.parse(result).msg);
     }
 }
 goToNextStep() {
