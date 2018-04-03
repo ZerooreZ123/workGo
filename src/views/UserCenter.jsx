@@ -6,6 +6,7 @@ import Alert from '../components/Alert';
 
 import XHR from '../utils/request';
 import API from '../api/index';
+// import {admin ,server} from '../api/route';
 
 import headPortrait from '../asset/userCenter/headPortrait.png';
 import record from '../asset/userCenter/record.png';
@@ -54,8 +55,8 @@ const Header = ({ roleid, parent }) => {           //个人中心头部
                 <div onClick={ev => parent.unbindUser(ev)} className={styles.unbindButton}>解绑企业</div>
             </div>
         )
-    }else if( roleid === '2'){
-        return(
+    } else if (roleid === '2') {
+        return (
             <div className={styles.header}>
                 <div onClick={ev => parent.scan(ev)} className={styles.scanBox}><img className={styles.scanImg} src={scan} alt='' /><span className={styles.scanText}>后台登录</span></div>
             </div>
@@ -116,7 +117,7 @@ const ClockPage = ({ prompt, parent, h, m, s }) => {
         return (
             <div className={styles.content}>
                 <div className={styles.clickClock}>
-                    <img className={styles.ring} src={yuanHuan} alt=""/>
+                    <img className={styles.ring} src={yuanHuan} alt="" />
                     <div className={styles.clickButton}>
                         <div className={styles.clockOn}>打卡</div>
                         <div className={styles.clockDate}>{h}:{m}:{s}</div>
@@ -134,7 +135,7 @@ const ClockPage = ({ prompt, parent, h, m, s }) => {
             <div className={styles.content}>
                 <div className={styles.clickClock}>
                     {/* <div className={styles.circular}></div> */}
-                    <img className={styles.circular} src={yuanHuan1} alt=""/>
+                    <img className={styles.circular} src={yuanHuan1} alt="" />
                     <div onClick={ev => parent.clockIn(ev)} className={styles.clickButton}>
                         <div className={styles.clockCan}>打卡</div>
                         <div className={styles.clockDate}>{h}:{m}:{s}</div>
@@ -150,7 +151,7 @@ const ClockPage = ({ prompt, parent, h, m, s }) => {
             <div className={styles.content}>
                 <div className={styles.clickClock}>
                     {/* <div className={styles.circular}></div> */}
-                     <img className={styles.circular} src={yuanHuan1} alt=""/>
+                    <img className={styles.circular} src={yuanHuan1} alt="" />
                     <div className={styles.clickButton}>
                         <div className={styles.clockOn}>打卡</div>
                         <div className={styles.clockDate}>{h}:{m}:{s}</div>
@@ -163,7 +164,7 @@ const ClockPage = ({ prompt, parent, h, m, s }) => {
                 <div className={styles.promptText}>搜索考勤机时请保证网络连接正常,蓝牙为开启状态哦!</div>
             </div>
         )
-    } else if(prompt === 3) {                      //打卡成功
+    } else if (prompt === 3) {                      //打卡成功
         return (
             <div className={styles.content}>
                 <div className={styles.clickClock}>
@@ -184,7 +185,7 @@ const ClockPage = ({ prompt, parent, h, m, s }) => {
             <div className={styles.content}>
                 <div className={styles.clickClock}>
                     {/* <div className={styles.circular}></div> */}
-                     <img className={styles.circular} src={yuanHuan1} alt=""/>
+                    <img className={styles.circular} src={yuanHuan1} alt="" />
                     <div className={styles.clickButton}>
                         <div className={styles.clockOn}>打卡</div>
                         <div className={styles.clockDate}>{h}:{m}:{s}</div>
@@ -220,6 +221,8 @@ class UserCenter extends Component {
             noticeTitle: '',       //公告标题
             normalDay: ''
         }
+        this.timer =  null;
+        this.closeTimeout =  null;
     }
     componentDidMount() {
         document.querySelector('title').innerText = '考勤打卡';
@@ -228,13 +231,14 @@ class UserCenter extends Component {
         this.getNewNotice();
         this.mainPage();
         this.getWX();
-        this.delaySearch()
+        this.firstIbeacons();
     }
     componentWillUnmount() {
         var main = {
             showUserCenter: this.state.showUserCenter,
             showPunchClock: this.state.showPunchClock,
-            prompt: this.state.prompt
+            prompt: this.state.prompt,
+            roleid: this.state.roleid,
         }
         window.sessionStorage.setItem('mainPage', JSON.stringify(main));
     }
@@ -244,24 +248,24 @@ class UserCenter extends Component {
             this.setState({
                 showUserCenter: test.showUserCenter,
                 showPunchClock: test.showPunchClock,
-                prompt: test.prompt
+                prompt: test.prompt,
+                roleid: test.roleid,
             })
-            if(test.showUserCenter === true) {
+            if (test.showUserCenter === true) {
                 document.querySelector('title').innerText = '个人中心';
-            }else{
+            } else {
                 document.querySelector('title').innerText = '考勤打卡';
             }
         } else {
             this.setState({
                 showUserCenter: false,   //展示模块1
                 showPunchClock: true,  //展示模块2
-                prompt:0
+                prompt: 0,
+                roleid: '',
             })
         }
     }
-    delaySearch() {
-        setTimeout(() => this.firstSearch(), 0)
-    }
+
     stopBeacons() {
         setTimeout(() => this.stopSearch(), 0)
     }
@@ -288,16 +292,14 @@ class UserCenter extends Component {
     }
     getTime() {                       //获取当前时/分/秒/月/日/星期
         var data = new Date();
-        this.setState({
-             h: data.getHours() < 10 ? '0' + data.getHours() : data.getHours(),
-             m: data.getMinutes() < 10 ? '0' + data.getMinutes() : data.getMinutes(),
-             s: data.getSeconds() < 10 ? '0' + data.getSeconds() : data.getSeconds()
-         });
+        this.setState({ h: data.getHours() < 10 ? '0' + data.getHours() : data.getHours() });
+        this.setState({ m: data.getMinutes() < 10 ? '0' + data.getMinutes() : data.getMinutes() });
+        this.setState({ s: data.getSeconds() < 10 ? '0' + data.getSeconds() : data.getSeconds() });
     }
     async getNewNotice() {
         const result = await XHR.post(window.admin + API.getNewNotice, { companyid: this.props.match.params.companyId });
         if (JSON.parse(result).data) {
-            this.setState({noticeState: true, noticeTitle: JSON.parse(result).data.title });
+            this.setState({ noticeState: true, noticeTitle: JSON.parse(result).data.title });
             window.sessionStorage.setItem('listId', JSON.parse(result).data.id)
         } else {
             this.setState({ noticeState: false })
@@ -327,13 +329,13 @@ class UserCenter extends Component {
     punchClock() {
         document.querySelector('title').innerText = '考勤打卡';
         this.setState({ showUserCenter: false, showPunchClock: true, prompt: 0 });
-        this.delaySearch();
+        this.searchIbeacons();
         this.getNewNotice();
     }
     personCenter() {
         document.querySelector('title').innerText = '个人中心';
         this.setState({ showUserCenter: true, showPunchClock: false });
-        this.stopBeacons();
+        this.stopSearch()
     }
     attendanceData() {
         this.props.history.push('/attendanceData')
@@ -358,12 +360,75 @@ class UserCenter extends Component {
         this.props.history.push(superUrl[i]);
     }
     scan() {                         //扫一扫
+        window.wx.ready(() => {
+            window.wx.scanQRCode({
+                needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                success: function (res) {
+                    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结
+                    window.sessionStorage.setItem("result", result);
+                    window.location.href = window.server + '/AttendanceFront/index.html#/backstagelogon';
+                }
+            });
+        })
     }
     stopSearch() {
+        clearTimeout(this.closeTimeout);
+        window.wx.stopSearchBeacons({
+            complete: (res) => {
+                clearTimeout(this.timer);
+            }
+        });
     }
-    firstSearch() {
+    firstIbeacons() {
+        window.wx.ready(() => {
+            this.searchIbeacons();
+        })
     }
     searchIbeacons() {
+        let that = this;
+        clearTimeout(this.timer);
+        this.timer = setTimeout(()=>{
+            window.wx.startSearchBeacons({       //开启ibeacons
+                ticket: "",
+                complete: (argv) => {
+                    //开启查找完成后的回调函数
+                    if (argv.errMsg === "startSearchBeacons:ok") {
+                        this.closeTimeout = setTimeout(() => { 
+                            this.setState({ prompt: 4 });
+                            this.stopSearch();
+                        }, 15000);
+                        // 监听iBeacon信号
+                        window.wx.onSearchBeacons({
+                            complete: (argv) => {
+                                clearTimeout(this.closeTimeout)
+                                //回调函数，可以数组形式取得该商家注册的在周边的相关设备列表
+                                if (argv.beacons.length > 0) {
+                                    const backData = [];
+                                    argv.beacons.forEach((ev, index) => {
+                                        backData.push({
+                                            major: ev.major,
+                                            minor: ev.minor
+                                        })
+                                    })
+                                    this.backState(backData);
+                                } else {
+                                    this.setState({ tipState: true })
+                                    setTimeout(() => {
+                                        this.setState({ tipState: false })
+                                    }, 2000);
+                                }
+                                this.stopSearch();
+                            }
+                        });
+                    } else {
+                        //停止搜索ibeacons
+                        this.setState({ prompt: 2 })
+                        this.stopSearch();
+                    }
+                }
+            }) 
+        } ,2e3)
     }
     unbindUser() {                  //解绑员工二次确认
         this.setState({ alertState: true })
@@ -376,11 +441,21 @@ class UserCenter extends Component {
         if (JSON.parse(result).success === 'T') {
             this.setState({ prompt: 1 })
         } else {
-            this.setState({ prompt: 4  })
+            this.setState({ prompt: 4 })
         }
     }
     async getWX() {
         const result = await XHR.post(window.admin + API.getSignature);
+        if (JSON.parse(result).success === 'T') {
+            window.wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: JSON.parse(result).data.appId, // 必填，公众号的唯一标识
+                timestamp: JSON.parse(result).data.timestamp, // 必填，生成签名的时间戳
+                nonceStr: JSON.parse(result).data.noncestr, // 必填，生成签名的随机串
+                signature: JSON.parse(result).data.signature,// 必填，签名
+                jsApiList: ['scanQRCode', 'startSearchBeacons', 'stopSearchBeacons', 'onSearchBeacons'] // 必填，需要使用的JS接口列表
+            });
+        }
     }
     async getOfficeList() {          //部门列表
         const result = await XHR.post(window.admin + API.getOfficeList, { companyid: this.state.companyid });
@@ -396,9 +471,9 @@ class UserCenter extends Component {
     }
     async unbind() {                //解绑员工   
         const result = await XHR.post(window.admin + API.unbindUser, { loginName: this.props.match.params.loginName });
-        if(JSON.parse(result).success === 'T') {
-            this.props.history.replace('/personalRegister/'+ this.props.match.params.companyId +'/' + this.props.match.params.loginName)
-        }else{
+        if (JSON.parse(result).success === 'T') {
+            this.props.history.replace('/personalRegister/' + this.props.match.params.companyId + '/' + this.props.match.params.loginName)
+        } else {
             alert(JSON.stringify(result).msg);
         }
     }
@@ -407,7 +482,9 @@ class UserCenter extends Component {
         this.setState({ dataSource: JSON.parse(result).data, roleid: JSON.parse(result).data.roleid, companyid: JSON.parse(result).data.companyid, id: JSON.parse(result).data.id });
         window.temp = {
             name: JSON.parse(result).data.name,
-            officeName: JSON.parse(result).data.officeName
+            officeName: JSON.parse(result).data.officeName,
+            phone: JSON.parse(result).data.phone,
+            companyName: JSON.parse(result).data.companyName
         }
         window.sessionStorage.setItem('loginName', this.props.match.params.loginName);
         window.sessionStorage.setItem('companyid', JSON.parse(result).data.companyid);
@@ -415,7 +492,7 @@ class UserCenter extends Component {
     }
     render() {
 
-        const { roleid, dataSource, prompt, h, m, s, noticeState, noticeTitle, showUserCenter, showPunchClock, alertState, tipState,tipState1 } = this.state;
+        const { roleid, dataSource, prompt, h, m, s, noticeState, noticeTitle, showUserCenter, showPunchClock, alertState, tipState, tipState1 } = this.state;
         const user = [{ icon: record, name: '考勤记录' }, { icon: remind, name: '打卡提醒' }, { icon: revise, name: '修改部门' }];
         const superMan = [{ icon: attendanceRecord, name: '员工考勤记录' }, { icon: administration, name: '企业管理' }, { icon: staff, name: '员工资料' }, { icon: release, name: '发布公告' }, { icon: setUp, name: '设置考勤' }];
         const ordinary = [{ icon: attendanceRecord, name: '员工考勤记录' }, { icon: administration, name: '企业管理' }, { icon: staff, name: '员工资料' }, { icon: release, name: '发布公告' }];
@@ -436,7 +513,7 @@ class UserCenter extends Component {
                                     <div className={styles.phone}>{dataSource.phone}</div>
                                     <div className={styles.company}>
                                         <span>{dataSource.companyName}</span>
-                                        <span>{dataSource.officeName?'/'+dataSource.officeName:''}</span>
+                                        <span>{dataSource.officeName ? '/' + dataSource.officeName : ''}</span>
                                     </div>
                                 </div>
                             </div>
