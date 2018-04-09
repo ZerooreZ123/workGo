@@ -71,19 +71,22 @@ async judgeUser() {
     const data = JSON.parse(result).data;
     if(JSON.parse(result).success === "T"){
         if(data.hasOwnProperty('companyid') && data.companyid !== '') {
-            this.props.history.replace('./userCenter/'+this.props.match.params.loginName +'/'+ data.companyid )  
+            if((this.props.match.params.companyid).toString() === (data.companyid).toString()){
+                this.props.history.replace('/userCenter/'+this.props.match.params.loginName +'/'+ data.companyid )  
+            }else{
+                alert('您已绑定企业，可进入公众号“gogo考勤”，直接打卡');
+            }
         }else{
             this.props.history.replace('/inviteCodeDetail')
         }
     }else{
-        alert(JSON.parse(result).msg);
+        alert(JSON.parse(result).data);
     }
 }
 goToNextStep() {
    if((this.state.inputText !== '') && (this.state.inputValue !== '')) {
         if(this.state.inputValue === this.state.code) {
             this.judgeUser();
-            // this.props.history.replace('/inviteCodeDetail')
         }else{
             alert("请输入正确的验证码")
         }

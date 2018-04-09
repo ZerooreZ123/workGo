@@ -54,7 +54,7 @@ async judgeUser() {
         if(JSON.parse(result).success === "T"){
             if(data.hasOwnProperty('companyid')) {
                 if(data.roleid === '2'){
-                    this.props.history.replace('./addAttendanceMachine/'+this.props.match.params.serialNumber +'/'+ data.companyName +'/'+data.name +'/'+ data.phone + '/'+data.loginName )  
+                    this.props.history.replace('/addAttendanceMachine/'+this.props.match.params.serialNumber +'/'+ data.companyName +'/'+data.name +'/'+ data.phone + '/'+data.loginName )  
                 }else{
                     alert('无权限')
                 }
@@ -65,7 +65,7 @@ async judgeUser() {
                 window.sessionStorage.setItem("Phone",this.state.inputPhone);
             }
         }else{
-            alert(JSON.parse(result).msg);
+            alert(JSON.parse(result).data);
         }
 
 }
