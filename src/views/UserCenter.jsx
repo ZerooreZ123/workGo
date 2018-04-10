@@ -305,7 +305,7 @@ class UserCenter extends Component {
         }
     }
     async clockIn() {                //员工打卡
-        const result = await XHR.post(window.admin + API.clockIn, { loginName: this.props.match.params.loginName });
+        const result = await XHR.post(window.admin + API.clockIn, { loginName: this.props.match.params.loginName,clockInWay:2});
         if (JSON.parse(result).success === "T") {
             this.setState({ prompt: 3 })
         } else {
@@ -366,12 +366,24 @@ class UserCenter extends Component {
     }
     searchIbeacons() {
         setTimeout(()=>{
-            window.workgo.rangingNearBeacons(function(result){
-                alert(JSON.stringify(result))
-              }, function(data){
-                alert(JSON.stringify(data))
-              })
-        },0)
+            window.workgo.listenBluetoothState((result)=>{
+               if(result.state.toString() === 'poweredOn'){
+                    window.workgo.rangingNearBeacons((result)=>{
+                    }, (data)=>{
+                        if(data.devices.length>0){
+                            alert(JSON.stringify(data))
+                            this.backState(data.devices);
+                        }else{
+                            this.setState({prompt:4})
+                        }
+                    })
+               }else{
+                   this.setState({prompt:2})
+               }
+
+            })
+           
+        },1000)
        
     }
     unbindUser() {                  //解绑员工二次确认
@@ -382,9 +394,12 @@ class UserCenter extends Component {
             companyid: this.state.companyid,
             devices: data
         })
+        // alert(JSON.parse(result).success);
         if (JSON.parse(result).success === 'T') {
+            // alert("2")
             this.setState({ prompt: 1 })
         } else {
+            // alert("3")
             this.setState({ prompt: 4  })
         }
     }

@@ -12,13 +12,18 @@ class Authorization extends Component {
     }
   } 
   componentDidMount() {
-      // this.icensing();
-
   }
-  scanQR() {
-     window.workgo.scanQRCode((result)=>{
-       alert(result)
-     })
+  scanQR() {                                      //扫描二维码进行注册
+    window.workgo.scanQRCode((result)=>{
+      const data = JSON.parse(decodeURIComponent(result).split('=')[1])['name'];
+      const code = JSON.parse(decodeURIComponent(result).split('=')[1])['code'];
+      const loginName = window.sessionStorage.getItem('workLoginId')
+      if(data.toString()=== 'machine1'){          //个人注册
+        this.props.history.replace('/personalRegister/'+code +'/' + loginName )
+      }else if (data.toString()=== 'machine'){    //公司注册
+        this.props.history.replace('/enterpriseRegistration/'+code +'/'+ loginName)  
+      }
+    })
   }
   render() {
     return (

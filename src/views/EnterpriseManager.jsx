@@ -167,7 +167,8 @@ class EnterpriseManager extends Component {
     }
     scan() {                         //扫一扫
         window.workgo.scanQRCode(function(result) {
-            
+            const code = JSON.parse(decodeURIComponent(result).split('=')[1])['code'];
+            window.location.href = window.server + '/AttendanceFront/index.html#/addAttendanceMachine/' +code + '/' + window.temp.companyName + '/' + window.temp.name + '/' + window.temp.phone + '/' + window.sessionStorage.getItem('loginName');   
         })
     }
     // async getWX() {                   //获取微信签名等信息

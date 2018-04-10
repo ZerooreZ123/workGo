@@ -7,27 +7,17 @@ import styles from '../styles/ReleaseAnnouncement.css';
 
 import XHR from '../utils/request';
 import API from '../api/index';
-// import {server} from '../api/index';
-// import {admin ,server} from '../api/route';
 
 import X from '../asset/ico/ClearButton.png';
 import addphoto from '../asset/ico/photo.png';
 import top from '../asset/manager/triangle-top.png';
 import down from '../asset/manager/downBlue.png';
 
-// const Icon = ({direction})  => {
-//     if (direction === true) {
-//       return <img className={styles.icon} src={top} alt=""/>;
-//     } else {
-//       return <img className={styles.icon} src={down} alt=""/>;
-//     }
-// }
-
+window.tempStorage = {};
 
 class ReleaseAnnouncement extends Component {
     constructor() {
         super();
-        window.temp = {};
         this.state = {
             tipState2: false,
             tipState1: false,
@@ -40,22 +30,16 @@ class ReleaseAnnouncement extends Component {
             selectedDay: '',           //开始选择时间
             mask: false,               //日历开始遮罩
             copyMask: false,
-            // imgBox: JSON.parse(window.localStorage.getItem('img')) || [],                                              //图片盒子
             imgSrcConcat: [],          //拼接字符串
-            // announcementTitle: window.localStorage.getItem('title') || '',
-            // announcementContent: window.localStorage.getItem('content') || ''
-            imgBox:[],
-            announcementTitle:'',
-            announcementContent:'',
-
-            
+            imgBox:JSON.parse(window.sessionStorage.getItem('img')) || [],                                              //图片盒子
+            announcementTitle: window.sessionStorage.getItem('title') || '',
+            announcementContent: window.sessionStorage.getItem('content') || ''
         };
     }
     componentDidMount() {
         document.querySelector('title').innerText = '发布公告';
         this.startDate();
         this.isBack = false;
-
         window.addEventListener("popstate", this.back, false);
     }
     componentWillUnmount() {
@@ -63,17 +47,17 @@ class ReleaseAnnouncement extends Component {
     }
 
     historyAnnouncement() {                    //跳转至历史记录
-        window.localStorage.setItem('title', this.state.announcementTitle);
-        window.localStorage.setItem('content', this.state.announcementContent);
-        window.localStorage.setItem('img', JSON.stringify(this.state.imgBox))
+        window.sessionStorage.setItem('title', this.state.announcementTitle);
+        window.sessionStorage.setItem('content', this.state.announcementContent);
+        window.sessionStorage.setItem('img', JSON.stringify(this.state.imgBox))
         this.isBack = true;
         this.props.history.push('/historyAnnouncement');
     }
     back = () => {
         if (!this.isBack) {
-            window.localStorage.removeItem('title', this.state.announcementTitle);
-            window.localStorage.removeItem('content', this.state.announcementContent);
-            window.localStorage.removeItem('img', JSON.stringify(this.state.imgBox))
+            window.sessionStorage.removeItem('title', this.state.announcementTitle);
+            window.sessionStorage.removeItem('content', this.state.announcementContent);
+            window.sessionStorage.removeItem('img', JSON.stringify(this.state.imgBox))
             if (this.state.announcementTitle !== '' || this.state.announcementContent !== '' || this.state.imgBox.length > 0) {
                 this.setState({ alertState: true });
                 this.props.history.push(null, null, document.URL);
@@ -90,13 +74,13 @@ class ReleaseAnnouncement extends Component {
     }
     selectBtn(dataState) {
         if (dataState) {
-            window.localStorage.setItem('title', this.state.announcementTitle);
-            window.localStorage.setItem('content', this.state.announcementContent);
-            window.localStorage.setItem('img', JSON.stringify(this.state.imgBox))
+            window.sessionStorage.setItem('title', this.state.announcementTitle);
+            window.sessionStorage.setItem('content', this.state.announcementContent);
+            window.sessionStorage.setItem('img', JSON.stringify(this.state.imgBox))
         } else {
-            window.localStorage.removeItem('title', this.state.announcementTitle);
-            window.localStorage.removeItem('content', this.state.announcementContent);
-            window.localStorage.removeItem('img', JSON.stringify(this.state.imgBox))
+            window.sessionStorage.removeItem('title', this.state.announcementTitle);
+            window.sessionStorage.removeItem('content', this.state.announcementContent);
+            window.sessionStorage.removeItem('img', JSON.stringify(this.state.imgBox))
         }
         this.isBack = true;
         this.props.history.goBack();
@@ -139,21 +123,6 @@ class ReleaseAnnouncement extends Component {
             }, 2000)
         }
     }
-    // selectDayClick(day) {
-    //     var myDate = new Date(day);
-    //     if(this.state.secondTime <= myDate.getTime()) {
-    //         this.setState({chooseDay:myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + '-' + myDate.getDate()});
-    //         this.setState({copyMask:false});
-    //         this.hideMask2();
-    //     }else{
-    //         this.hideMask2();
-    //         this.setState({tipState:true});
-    //         setTimeout(()=>{
-    //             this.setState({tipState:false})
-    //         },2000)
-    //     }
-
-    // }
     preClockInRemind(day) {
         setTimeout(() => this.handleDayClick(day), 0);
     }
@@ -162,20 +131,15 @@ class ReleaseAnnouncement extends Component {
     }
     showMask1() {
         this.setState({ mask: true })
-        // this.setState({iconState:false});
     }
     hideMask1() {
         this.setState({ mask: false });
-        // this.setState({iconState:true});
-        // setTimeout(()=>this.showMask2(),500)
     }
     showMask2() {
         this.setState({ copyMask: true })
-        // this.setState({iconState:false});
     }
     hideMask2() {
         this.setState({ copyMask: false });
-        // this.setState({iconState:true});
     }
     allMask() {
         this.setState({ copyMask: false, mask: false })
@@ -226,8 +190,6 @@ class ReleaseAnnouncement extends Component {
                 setTimeout(() => {
                     this.setState({ tipState1: false })
                 }, 2000)
-                // this.setState({imgSrcConcat:this.state.imgSrcConcat.slice(0,9)});
-
             } else {
                 this.setState({ imgBox: this.state.imgBox });
                 this.setState({ imgSrcConcat: this.state.imgSrcConcat });
@@ -237,7 +199,6 @@ class ReleaseAnnouncement extends Component {
         }
     }
     async announce() {                         //发布公告
-        localStorage.clear();
         if (this.state.imgBox.length > 0) {
             const result = await XHR.post(window.admin + API.announce, {
                 userid: window.sessionStorage.getItem('id'),

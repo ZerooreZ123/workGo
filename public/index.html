@@ -10,13 +10,27 @@
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
     <script>
-        var  server = 'http://192.168.1.41:8080';                    
+        // var  server = 'http://192.168.1.170:8080';                    
         // var server = "http://www.junl.cn";                 
-        // var server = 'http://kq-test.iworkgo.com';                             
-
-        // var admin ="http://kq-test.iworkgo.com/f/yk/api/";                    
+        var server = 'http://192.168.1.170:8080';                             
+                    
         // var admin = "http://www.junl.cn/AM/f/yk/api/";
-        var admin = 'http://192.168.1.41:8080/AM/f/yk/api/';          
+        // var admin = 'http://192.168.1.170:8080/f/yk/api/';
+        var admin = 'http://192.168.1.170:8080/f/yk/api/'; 
+        
+        // var main = "http://www.junl.cn/AM/f/yk/workGo/";
+        // var main = "http://192.168.1.170:8080/f/yk/workGo/";
+        var main = "http://192.168.1.170:8080/f/yk/workGo/";
+
+        const appId = "wk2644313361074176";
+        const secretKey = "/B36v3OIEQjDs0x3K2AvCg5WSgFqv4GAUoaNI91i/Pg=";
+        window.workgo.getAuth(appId, secretKey, function(result) {
+            if (result.success) {
+              alert("授权成功")
+            }else {
+              alert(result.errMsg)
+            }
+        })
     </script>
 
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
@@ -38,7 +52,7 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <!-- <script src="%PUBLIC_URL%/jweixin.js"></script> -->
-    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <!-- <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script> -->
     <title>gogo考勤</title>
   </head>
   <body>

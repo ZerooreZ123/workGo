@@ -37,6 +37,7 @@ class LoginJump extends Component {
             this.props.history.replace('/userCenter/'+data.loginName +'/'+ data.companyid ) 
         }else{
             this.props.history.replace('/authorization');
+            window.sessionStorage.setItem('workLoginId',data.loginName)
         }
     }else{
         alert(JSON.parse(result).data);
