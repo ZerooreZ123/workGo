@@ -359,42 +359,47 @@ class AttendanceData extends Component {
     export() {                       //跳转至导出页面
         if(this.state.maskToggle === 0){
             if(this.state.currentIndex === 0) {     //导出日
-                window.Data = {
+                const Data = {
                     time:this.state.selectDate,
                     section:this.state.departmentName,
                     departmentId:this.state.departmentId
                 }
+                window.sessionStorage.setItem("dataResultExport",JSON.stringify(Data))
                 this.props.history.push('/exportData');
             }else if(this.state.currentIndex === 1) { //导出月
                 if( this.state.personDetail === false){
-                    window.Data = {
+                    const Data = {
                         time:this.state.selectMonth,
                         section:this.state.departmentName,
                         departmentId:this.state.departmentId,
                     }
+                    window.sessionStorage.setItem("dataResultExport",JSON.stringify(Data))
                     this.props.history.push('/exportData'); 
                 }else{                               //导出个人
-                    window.Data = {
+                    const Data = {
                         time:this.state.selectMonth,
                         section:this.state.departmentName,
                         userids:this.state.nameId
                     }
+                    window.sessionStorage.setItem("dataResultExport",JSON.stringify(Data))
                     this.props.history.push('/exportData'); 
                 }
             }else{                                  //导出年
                 if(this.state.personYearDetail === false) {
-                    window.Data = {
+                    const Data = {
                         time:this.state.selectYear,
                         section:this.state.departmentName,
                         departmentId:this.state.departmentId
                     }
+                    window.sessionStorage.setItem("dataResultExport",JSON.stringify(Data))
                     this.props.history.push('/exportData'); 
                 }else{
-                    window.Data = {
+                    const Data = {
                         time:this.state.selectYear,
                         section:this.state.departmentName,
                         userids:this.state.nameId
                     }
+                    window.sessionStorage.setItem("dataResultExport",JSON.stringify(Data))
                     this.props.history.push('/exportData'); 
                 }
             }

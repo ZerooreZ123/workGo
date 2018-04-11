@@ -13,39 +13,44 @@ class ExportData extends Component{
         this.state={
             tipState:false,        //提示状态
             inputMail:'',           //输入的mail
+            section:JSON.parse(window.sessionStorage.getItem("dataResultExport")).section,
+            time:JSON.parse(window.sessionStorage.getItem("dataResultExport")).time,
+            departmentId:JSON.parse(window.sessionStorage.getItem("dataResultExport")).departmentId  || '',
+            userids:JSON.parse(window.sessionStorage.getItem("dataResultExport")).userids || '',
         }
     }
     componentDidMount() {
         document.querySelector('title').innerText = '导出数据';
     }
     componentWillUnmount() {
-        delete window.Data;
+        window.sessionStorage.removeItem("dataResultExport");
     }
     getMail(ev) {
         this.setState({inputMail:ev.target.value})
     }
     exportData() {
-        if(window.Data.time.length === 10){                     //日
-            if(window.Data.section === '全部') {      //全部
-                this.getRecords(window.Data.time,window.Data.time);   
+        const {time,section,departmentId,userids} = this.state;
+        if(time.length === 10){                     //日
+            if(section === '全部') {      //全部
+                this.getRecords(time,time);   
             }else{                                   //部门
-                this.getRecords(window.Data.time,window.Data.time,window.Data.departmentId);   
+                this.getRecords(time,time,departmentId);   
             }
-        }else if(window.Data.time.length === 7){                //月
-            if(window.Data.section === '全部') {      //全部
-                this.getRecords(window.Data.time + '-01',moment(window.Data.time).endOf('month').format('YYYY-MM-DD'));   
-            }else if(window.Data.departmentId){                                   //部门
-                this.getRecords(window.Data.time + '-01',moment(window.Data.time).endOf('month').format('YYYY-MM-DD'),window.Data.departmentId)   
+        }else if(time.length === 7){                //月
+            if(section === '全部') {      //全部
+                this.getRecords(time + '-01',moment(time).endOf('month').format('YYYY-MM-DD'));   
+            }else if(departmentId){                                   //部门
+                this.getRecords(time + '-01',moment(time).endOf('month').format('YYYY-MM-DD'),departmentId)   
             }else {
-                this.getRecords(window.Data.time + '-01',moment(window.Data.time).endOf('month').format('YYYY-MM-DD'),'',window.Data.userids)   
+                this.getRecords(time + '-01',moment(time).endOf('month').format('YYYY-MM-DD'),'',userids)   
             }
         }else{                                                  //年
-            if(window.Data.section === '全部') {      //全部
-                this.getRecords(window.Data.time + '-01-01',window.Data.time+ '-12-31');   
-            }else if(window.Data.departmentId){                                   //部门
-                this.getRecords(window.Data.time + '-01-01',window.Data.time+ '-12-31',window.Data.departmentId)   
+            if(section === '全部') {      //全部
+                this.getRecords(time + '-01-01',time+ '-12-31');   
+            }else if(departmentId){                                   //部门
+                this.getRecords(time + '-01-01',time+ '-12-31',departmentId)   
             }else{
-                this.getRecords(window.Data.time + '-01-01',window.Data.time+ '-12-31','',window.Data.userids)   
+                this.getRecords(time + '-01-01',time+ '-12-31','',userids)   
             }
         }
     }
@@ -72,13 +77,13 @@ class ExportData extends Component{
         }
     }
     render() {
-        const {inputMail,tipState} = this.state;
+        const {inputMail,tipState,time,section} = this.state;
         return(
             <div className={styles.container}>
                 <div className={styles.content}>
                     <div className={styles.describe}>
                         <div className={styles.dataDescribe}>数据描述</div>
-                        <div><span>{window.Data.time}</span>/<span>{window.Data.section}</span></div>
+                        <div><span>{time}</span>/<span>{section}</span></div>
                     </div>
                     <div className={inputMail === ''?styles.mailbox1:styles.mailbox}>
                         <div className={inputMail?styles.receiveMail:styles.hideReceive}>接收邮箱</div>

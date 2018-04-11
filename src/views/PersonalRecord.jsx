@@ -256,22 +256,25 @@ class PersonalRecord extends Component {
     export() {                       //跳转至导出页面
         if(this.state.maskToggle === 0){
             if(this.state.currentIndex === 0) {     //导出日
-                window.Data = {
+                const Data = {
                     time:this.state.selectDate,
                     userids:this.state.nameId
                 }
+                window.sessionStorage.setItem("personResultExport",JSON.stringify(Data))
                 this.props.history.push('/personExport');
             }else if(this.state.currentIndex === 1) { //导出月           
-                    window.Data = {
+                    const Data = {
                         time:this.state.selectMonth,
                         userids:this.state.nameId
                     }
+                    window.sessionStorage.setItem("personResultExport",JSON.stringify(Data))
                     this.props.history.push('/personExport'); 
             }else{                                  //导出年
-                    window.Data = {
+                    const Data = {
                         time:this.state.selectYear,
                         userids:this.state.nameId
                     }
+                    window.sessionStorage.setItem("personResultExport",JSON.stringify(Data))
                     this.props.history.push('/personExport'); 
             }
         }else{

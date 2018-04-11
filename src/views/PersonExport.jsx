@@ -13,24 +13,27 @@ class PersonExport extends Component{
         this.state={
             tipState:false,        //提示状态
             inputMail:'',           //输入的mail
+            time: JSON.parse(window.sessionStorage.getItem("personResultExport")).time,
+            userids:JSON.parse(window.sessionStorage.getItem("personResultExport")).userids,
         }
     }
     componentDidMount() {
         document.querySelector('title').innerText = '导出数据';
     }
     componentWillUnmount() {
-        delete window.Data;
+        window.sessionStorage.removeItem("personResultExport");
     }
     getMail(ev) {
         this.setState({inputMail:ev.target.value})
     }
     exportData() {
-        if(window.Data.time.length === 10){                     //日
-            this.getRecords(window.Data.time,window.Data.time,window.Data.userids);   
-        }else if(window.Data.time.length === 7){                //月
-            this.getRecords(window.Data.time + '-01',moment(window.Data.time).endOf('month').format('YYYY-MM-DD'),window.Data.userids) 
+        const {time,userids} = this.state;
+        if(time.length === 10){                     //日
+            this.getRecords(time,time,userids);   
+        }else if(time.length === 7){                //月
+            this.getRecords(time + '-01',moment(time).endOf('month').format('YYYY-MM-DD'),userids) 
         }else{                                                  //年
-            this.getRecords(window.Data.time + '-01-01',window.Data.time+ '-12-31',window.Data.userids)
+            this.getRecords(time + '-01-01',time+ '-12-31',userids)
         }
     }
 
@@ -55,13 +58,13 @@ class PersonExport extends Component{
         }
     }
     render() {
-        const {inputMail,tipState} = this.state;
+        const {inputMail,tipState,time,} = this.state;
         return(
             <div className={styles.container}>
                 <div className={styles.content}>
                     <div className={styles.describe}>
                         <div className={styles.dataDescribe}>数据描述</div>
-                        <div><span>{window.Data.time}</span>/<span>{window.Person.name}</span></div>
+                        <div><span>{time}</span>/<span>{window.Person.name}</span></div>
                     </div>
                     <div className={inputMail === ''?styles.mailbox1:styles.mailbox}>
                         <div className={inputMail?styles.receiveMail:styles.hideReceive}>接收邮箱</div>

@@ -211,7 +211,7 @@ class UserCenter extends Component {
             id: '',                 //用户Id
             showUserCenter: false,   //展示模块1
             showPunchClock: true,  //展示模块2
-            companyid: '',         //公司Id
+            // companyid: '',         //公司Id
             roleid: '',            //用户权限
             dataSource: {},        //用户信息
             result: {},            //签名内容
@@ -220,6 +220,7 @@ class UserCenter extends Component {
             noticeTitle: '',       //公告标题
             normalDay: ''
         }
+        this.num = 0;
     }
     componentDidMount() {
         document.querySelector('title').innerText = '考勤打卡';
@@ -227,7 +228,7 @@ class UserCenter extends Component {
         this.showTime();
         this.getNewNotice();
         this.mainPage();
-        // this.getWX();
+        // this.makeGet();
         this.searchIbeacons()
     }
     componentWillUnmount() {
@@ -281,6 +282,7 @@ class UserCenter extends Component {
     }
     refresh() {                       //刷新页面
         this.setState({ prompt: 0 });
+        this.num = 0;
         this.searchIbeacons();
     }
     noteceDelete() {                  //删除通知
@@ -327,6 +329,7 @@ class UserCenter extends Component {
     punchClock() {
         document.querySelector('title').innerText = '考勤打卡';
         this.setState({ showUserCenter: false, showPunchClock: true, prompt: 0 });
+        this.num = 0;
         this.searchIbeacons();
         this.getNewNotice();
     }
@@ -340,7 +343,7 @@ class UserCenter extends Component {
     }
     moveToUser(i) {                   //一般用户选项跳转
         this.getOfficeList();
-        const userUrl = ['/attendanceRecord/' + this.state.companyid + '/' + this.state.id, '/cardReminding', '/revisionDepartment'];
+        const userUrl = ['/attendanceRecord/' + this.props.match.params.companyId + '/' + this.state.id, '/cardReminding', '/revisionDepartment'];
         this.props.history.push(userUrl[i]);
     }
     moveToOrdinary(i) {               //普通管理员选项跳转
@@ -365,17 +368,29 @@ class UserCenter extends Component {
         window.workgo.stopRangingNearBeacon()
     }
     searchIbeacons() {
-        setTimeout(()=>{
+         setTimeout(()=>{
+             this.num ++
             window.workgo.listenBluetoothState((result)=>{
                if(result.state.toString() === 'poweredOn'){
                     window.workgo.rangingNearBeacons((result)=>{
-                    }, (data)=>{
-                        if(data.devices.length>0){
-                            alert(JSON.stringify(data))
-                            this.backState(data.devices);
+                        if(result.success){
+                            
                         }else{
-                            this.setState({prompt:4})
+                            alert(result.errMsg)
                         }
+                    }, (data)=>{
+                        setTimeout(()=>{
+                            if(data.devices.length>0){
+                                window.workgo.stopRangingNearBeacon()
+                                this.backState(data.devices);
+                            }else{
+                                if(this.num<4){
+                                    this.searchIbeacons();
+                                }else{
+                                    this.setState({prompt:4})
+                                }
+                            }
+                        },2000)
                     })
                }else{
                    this.setState({prompt:2})
@@ -391,15 +406,12 @@ class UserCenter extends Component {
     }
     async backState(data) {
         const result = await XHR.post(window.admin + API.judgeDevice, {
-            companyid: this.state.companyid,
+            companyid: this.props.match.params.companyId,
             devices: data
         })
-        // alert(JSON.parse(result).success);
         if (JSON.parse(result).success === 'T') {
-            // alert("2")
             this.setState({ prompt: 1 })
         } else {
-            // alert("3")
             this.setState({ prompt: 4  })
         }
     }
@@ -407,7 +419,7 @@ class UserCenter extends Component {
        
     }
     async getOfficeList() {          //部门列表
-        const result = await XHR.post(window.admin + API.getOfficeList, { companyid: this.state.companyid });
+        const result = await XHR.post(window.admin + API.getOfficeList, { companyid: this.props.match.params.companyId });
         const dataSource = JSON.parse(result).data || [];
         const sectionList = [];
         dataSource.forEach((item, index) => {
@@ -428,13 +440,13 @@ class UserCenter extends Component {
     }
     async getUser() {              //获取用户信息
         const result = await XHR.post(window.admin + API.getUser, { loginName: this.props.match.params.loginName });
-        this.setState({ dataSource: JSON.parse(result).data, roleid: JSON.parse(result).data.roleid, companyid: JSON.parse(result).data.companyid, id: JSON.parse(result).data.id });
+        this.setState({ dataSource: JSON.parse(result).data, roleid: JSON.parse(result).data.roleid, id: JSON.parse(result).data.id });
         window.temp = {
             name: JSON.parse(result).data.name,
             officeName: JSON.parse(result).data.officeName
         }
         window.sessionStorage.setItem('loginName', this.props.match.params.loginName);
-        window.sessionStorage.setItem('companyid', JSON.parse(result).data.companyid);
+        window.sessionStorage.setItem('companyid', this.props.match.params.companyId);
         window.sessionStorage.setItem('id', JSON.parse(result).data.id);
     }
     render() {

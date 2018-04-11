@@ -61,10 +61,10 @@ class Search extends Component {
         this.searchHistory();
     }
     componentWillUnmount(){
-        window.localStorage.setItem('searchName',this.state.searchHistory);
+        window.sessionStorage.setItem('searchName',this.state.searchHistory);
     }
     searchHistory() {
-        var test=window.localStorage.getItem('searchName');
+        var test=window.sessionStorage.getItem('searchName');
         function unique(arr){
             　　var newArr = [arr[0]];
            　　 for(var i=1;i<arr.length;i++){
@@ -82,7 +82,7 @@ class Search extends Component {
         }
     }
     empty() {
-        window.localStorage.removeItem("searchName")
+        window.sessionStorage.removeItem("searchName")
         this.setState({searchHistory:[],tipState:true});
         setTimeout(()=>{
             this.setState({tipState:false});
