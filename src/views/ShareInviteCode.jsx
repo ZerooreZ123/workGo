@@ -44,7 +44,7 @@ class ShareInviteCode extends Component {
                     <img className={styles.imgSize} src={this.state.imgBase64} alt=""/>
                 </div>
                 <div className={styles.codetext}>邀请码</div>
-                <div className={styles.text}>长按二维码,分享邀请码即可让员工注册</div>
+                <div className={styles.text}>分享邀请码即可让员工注册</div>
             </div>    
         </div>
         {/* <div onClick={ev =>this.enterCode(ev)} className={styles.enterCode}>进入公众号</div> */}

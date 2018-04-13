@@ -10,7 +10,6 @@ import API from '../api/index';
 
 import X from '../asset/ico/ClearButton.png';
 import addphoto from '../asset/ico/photo.png';
-import top from '../asset/manager/triangle-top.png';
 import down from '../asset/manager/downBlue.png';
 
 window.tempStorage = {};
@@ -96,7 +95,7 @@ class ReleaseAnnouncement extends Component {
         const R1 = myDate.getFullYear() + '' + (myDate.getMonth() + 1) + '' + myDate.getDate() + '';
         const R2 = (new Date().getFullYear()) + '' + (new Date().getMonth() + 1) + '' + (new Date().getDate()) + '';
         // const R5 = this.state.chooseDay.replace(/-/g, '');
-        if (parseInt(R2) <= parseInt(R1)) {
+        if (parseInt(R2,10) <= parseInt(R1,10)) {
             this.setState({ selectedDay: myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + '-' + myDate.getDate() });
             this.setState({ copyMask: false });
             this.hideMask1();
@@ -111,7 +110,7 @@ class ReleaseAnnouncement extends Component {
         const myDate = new Date(day);
         const R3 = myDate.getFullYear() + '' + (myDate.getMonth() + 1) + '' + myDate.getDate() + '';
         const R4 = this.state.selectedDay.replace(/-/g, '');
-        if (parseInt(R4) <= parseInt(R3)) {
+        if (parseInt(R4,10) <= parseInt(R3,10)) {
             this.setState({ chooseDay: myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + '-' + myDate.getDate() });
             this.setState({ copyMask: false });
             this.hideMask2();
