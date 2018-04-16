@@ -369,7 +369,7 @@ class UserCenter extends Component {
     }
     searchIbeacons() {
          setTimeout(()=>{
-             this.num ++
+             this.num += 1
             window.workgo.listenBluetoothState((result)=>{
                if(result.state.toString() === 'poweredOn'){
                     window.workgo.rangingNearBeacons((result)=>{
@@ -380,6 +380,7 @@ class UserCenter extends Component {
                         }
                     }, (data)=>{
                         setTimeout(()=>{
+                            // alert(JSON.stringify(data.devices));
                             if(data.devices.length>0){
                                 window.workgo.stopRangingNearBeacon()
                                 this.backState(data.devices);

@@ -87,16 +87,16 @@ class ReleaseAnnouncement extends Component {
 
     startDate() {
         var date = new Date();
-        this.setState({ selectedDay: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() });
-        this.setState({ chooseDay: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() });
+        this.setState({ selectedDay: this.addZero(date.getFullYear()) + '-' + this.addZero(date.getMonth() + 1) + '-' + this.addZero(date.getDate()) });
+        this.setState({ chooseDay: this.addZero(date.getFullYear()) + '-' + this.addZero(date.getMonth() + 1) + '-' + this.addZero(date.getDate()) });
     }
     handleDayClick(day) {
         const myDate = new Date(day);
-        const R1 = myDate.getFullYear() + '' + (myDate.getMonth() + 1) + '' + myDate.getDate() + '';
-        const R2 = (new Date().getFullYear()) + '' + (new Date().getMonth() + 1) + '' + (new Date().getDate()) + '';
-        // const R5 = this.state.chooseDay.replace(/-/g, '');
+        const R1 = this.addZero(myDate.getFullYear()) + '' + this.addZero(myDate.getMonth() + 1) + '' + this.addZero(myDate.getDate()) + '';
+        const R2 = this.addZero(new Date().getFullYear()) + '' + this.addZero(new Date().getMonth() + 1) + '' + this.addZero(new Date().getDate()) + '';
+        console.log(R1,R2)
         if (parseInt(R2,10) <= parseInt(R1,10)) {
-            this.setState({ selectedDay: myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + '-' + myDate.getDate() });
+            this.setState({ selectedDay: this.addZero(myDate.getFullYear()) + '-' + this.addZero(myDate.getMonth() + 1) + '-' + this.addZero(myDate.getDate()) });
             this.setState({ copyMask: false });
             this.hideMask1();
         } else {
@@ -108,10 +108,11 @@ class ReleaseAnnouncement extends Component {
     }
     selectDayClick(day) {
         const myDate = new Date(day);
-        const R3 = myDate.getFullYear() + '' + (myDate.getMonth() + 1) + '' + myDate.getDate() + '';
+        const R3 = this.addZero(myDate.getFullYear()) + '' + this.addZero(myDate.getMonth() + 1) + '' + this.addZero(myDate.getDate()) + '';
         const R4 = this.state.selectedDay.replace(/-/g, '');
+        console.log(R3,R4);
         if (parseInt(R4,10) <= parseInt(R3,10)) {
-            this.setState({ chooseDay: myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + '-' + myDate.getDate() });
+            this.setState({ chooseDay: this.addZero(myDate.getFullYear()) + '-' + this.addZero(myDate.getMonth() + 1) + '-' + this.addZero(myDate.getDate()) });
             this.setState({ copyMask: false });
             this.hideMask2();
         } else {
@@ -142,6 +143,9 @@ class ReleaseAnnouncement extends Component {
     }
     allMask() {
         this.setState({ copyMask: false, mask: false })
+    }
+    addZero(s) {                     //时间格式转化
+        return s < 10 ? '0' + s: s;
     }
     delete(i) {
         this.state.imgBox.splice(i, 1);
