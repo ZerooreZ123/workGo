@@ -20,7 +20,7 @@ class Backstagelogon extends Component {
     async register() {
         const result = await XHR.post(window.admin + API.login,{
             loginName:window.sessionStorage.getItem("loginName"),
-            quickMark:window.sessionStorage.getItem("result")
+            quickMark:window.sessionStorage.getItem("resultSrc")
         })
         if(JSON.parse(result).success === 'T') {
             alert("登录成功");

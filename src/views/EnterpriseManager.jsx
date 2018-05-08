@@ -166,24 +166,12 @@ class EnterpriseManager extends Component {
            window.index = i
     }
     scan() {                         //扫一扫
-        window.workgo.scanQRCode(function(result) {
-            const code = JSON.parse(decodeURIComponent(result).split('=')[1])['code'];
+        window.workgo.scanQRCode(function(dataResult) {
+            const qrSrc = decodeURIComponent(dataResult['result']).split('=')[1];
+            const code = JSON.parse(qrSrc).code;
             window.location.href = window.server + '/AttendanceFront/index.html#/addAttendanceMachine/' +code + '/' + window.temp.companyName + '/' + window.temp.name + '/' + window.temp.phone + '/' + window.sessionStorage.getItem('loginName');   
         })
     }
-    // async getWX() {                   //获取微信签名等信息
-    //     const result = await XHR.post(window.admin + API.getSignature);
-    //     if (JSON.parse(result).success === 'T') {
-    //         this.setState({
-    //             result: {
-    //                 appId:JSON.parse(result).data.appId,
-    //                 timestamp: JSON.parse(result).data.timestamp,
-    //                 nonceStr: JSON.parse(result).data.noncestr,
-    //                 signature: JSON.parse(result).data.signature
-    //             }
-    //         })
-    //     }
-    // }
     addOne() {
         setTimeout(()=>this.addOrUpdateOfficce(), 0);
     }

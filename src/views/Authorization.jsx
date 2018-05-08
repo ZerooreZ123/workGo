@@ -13,15 +13,17 @@ class Authorization extends Component {
   } 
   componentDidMount() {
   }
-  scanQR() {                                      //扫描二维码进行注册
-    window.workgo.scanQRCode((result)=>{
-      const data = JSON.parse(decodeURIComponent(result).split('=')[1])['name'];
-      const code = JSON.parse(decodeURIComponent(result).split('=')[1])['code'];
-      const loginName = window.sessionStorage.getItem('workLoginId')
-      if(data.toString()=== 'machine1'){          //个人注册
-        this.props.history.replace('/personalRegister/'+code +'/' + loginName )
-      }else if (data.toString()=== 'machine'){    //公司注册
-        this.props.history.replace('/enterpriseRegistration/'+code +'/'+ loginName)  
+  scanQR() {                                  //扫描二维码进行注册
+    window.workgo.scanQRCode((dataResult) => {
+      const qrSrc = decodeURIComponent(dataResult['result']).split('=')[1];
+      const data = JSON.parse(qrSrc).name;
+      const code = JSON.parse(qrSrc).code;
+      const workLoginId = window.sessionStorage.getItem('workLoginId')
+      const workCompanyId = window.sessionStorage.getItem('workCompanyId')
+      if(data === 'machine1'){          //个人注册
+        this.props.history.replace('/personalRegister/'+ workCompanyId + '/' + workLoginId)
+      }else if (data === 'machine'){    //公司注册
+        this.props.history.replace('/enterpriseRegistration/'+ code + '/'+ workLoginId)
       }
     })
   }
@@ -30,7 +32,7 @@ class Authorization extends Component {
       <div className={styles.wrap}>
           <div className={styles.box}>
                 <div onClick = {ev =>this.scanQR(ev)} className={styles.imgBox}><img className={styles.imgPhoto} src={scanIcon} alt=""/></div>
-                <div className={styles.text}>点击图标扫描二维码进行注册</div>
+                <div className = {styles.text}>点击图标扫描二维码进行注册</div>
           </div>
       </div>
     );

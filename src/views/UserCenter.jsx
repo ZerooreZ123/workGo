@@ -361,7 +361,10 @@ class UserCenter extends Component {
         this.props.history.push(superUrl[i]);
     }
     scan() {                         //扫一扫
-        window.workgo.scanQRCode(function(result) {
+        window.workgo.scanQRCode((dataresult) => {
+            window.sessionStorage.setItem("resultSrc", dataresult.result);
+            // window.location.href = window.server + '/AttendanceFront/index.html#/backstagelogon';
+            this.props.history.push('/backstagelogon');;
         })
     }
     stopSearch() {
@@ -380,7 +383,6 @@ class UserCenter extends Component {
                         }
                     }, (data)=>{
                         setTimeout(()=>{
-                            // alert(JSON.stringify(data.devices));
                             if(data.devices.length>0){
                                 window.workgo.stopRangingNearBeacon()
                                 this.backState(data.devices);
@@ -444,7 +446,9 @@ class UserCenter extends Component {
         this.setState({ dataSource: JSON.parse(result).data, roleid: JSON.parse(result).data.roleid, id: JSON.parse(result).data.id });
         window.temp = {
             name: JSON.parse(result).data.name,
-            officeName: JSON.parse(result).data.officeName
+            officeName: JSON.parse(result).data.officeName,
+            phone: JSON.parse(result).data.phone,
+            companyName: JSON.parse(result).data.companyName
         }
         window.sessionStorage.setItem('loginName', this.props.match.params.loginName);
         window.sessionStorage.setItem('companyid', this.props.match.params.companyId);
