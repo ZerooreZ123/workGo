@@ -19,9 +19,8 @@ class Authorization extends Component {
       const data = JSON.parse(qrSrc).name;
       const code = JSON.parse(qrSrc).code;
       const workLoginId = window.sessionStorage.getItem('workLoginId')
-      const workCompanyId = window.sessionStorage.getItem('workCompanyId')
       if(data === 'machine1'){          //个人注册
-        this.props.history.replace('/personalRegister/'+ workCompanyId + '/' + workLoginId)
+        this.props.history.replace('/personalRegister/'+ code + '/' + workLoginId)
       }else if (data === 'machine'){    //公司注册
         this.props.history.replace('/enterpriseRegistration/'+ code + '/'+ workLoginId)
       }

@@ -1,20 +1,20 @@
-.container{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    background:#fff;
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
 }
-.headerTip{
-    padding:0 22px;
-    height:32px;
-    padding:40px 0;
+.headerTip {
+  padding: 0 22px;
+  height: 32px;
+  padding: 40px 0;
 }
-.time{
-    width:310px;
-    margin:0 auto;
-    font-size:32px;
-    color:#000;
+.time {
+  width: 310px;
+  margin: 0 auto;
+  font-size: 32px;
+  color: #000;
 }
 /* .rankingList{
     position:absolute;
@@ -33,168 +33,178 @@
     top:-2px;
     color:#2093e6;
 } */
-.noticeBoard{
-    padding:22px;
-    background:#fdf0ec;
+.noticeBoard {
+  padding: 22px;
+  background: #fdf0ec;
 }
-.noticeImg{
-    display:inline-block;
-    width:30px;
-    height:30px;
-    margin-right:10px;
+.noticeImg {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
 }
-.noticeText{
-    position:relative;
-    top:2px;
-    display:inline-block;
-    width:580px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    font-size:22px;
-    color:#ed8768;
+.noticeText {
+  position: relative;
+  top: 2px;
+  display: inline-block;
+  width: 580px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 22px;
+  color: #ed8768;
 }
-.noteceDelete{
-    display:inline-block;
-    width:30px;
-    height:30px;
-    margin-left:30px;
+.noteceDelete {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-left: 30px;
 }
-.content{
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.clickClock{
-    margin:270px 0 46px;
-    position:relative;
+.clickClock {
+  margin: 270px 0 46px;
+  position: relative;
 }
-.ring{
-    z-index:1;
-    width:276px;
-    height:276px;
-    border:18px solid #b4dbf7;
-    border-left-color: #90c4e9;
-    border-radius:50%;
-    -webkit-animation:circle 1s infinite linear;/*匀速 循环*/
+.ring {
+  z-index: 1;
+  width: 276px;
+  height: 276px;
+  border: 18px solid #b4dbf7;
+  border-left-color: #90c4e9;
+  border-radius: 50%;
+  -webkit-animation: circle 1s infinite linear; /*匀速 循环*/
 }
-.circular{
-    z-index:1;
-    width:276px;
-    height:276px;
-    border:18px solid #b4dbf7;
-    border-radius:50%;
+.circular {
+  z-index: 1;
+  width: 276px;
+  height: 276px;
+  border: 18px solid #b4dbf7;
+  border-radius: 50%;
 }
-.cardFinish{
-    z-index:1;
-    width:276px;
-    height:276px;
+.cardFinish {
+  z-index: 1;
+  width: 276px;
+  height: 276px;
 }
-.cardTime{
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top:24px;
-    left:0;
-    z-index:2;
-    width:276px;
-    height:276px;
-    color:#6dbafe;
+.cardTime {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 24px;
+  left: 0;
+  z-index: 2;
+  width: 276px;
+  height: 276px;
+  color: #6dbafe;
 }
-@-webkit-keyframes circle{
-    0%{ transform:rotate(0deg); }
-    100%{ transform:rotate(360deg); }
+@-webkit-keyframes circle {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
-.clickButton{
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top:18px;
-    left:18px;
-    z-index:2;
-    width:276px;
-    height:276px;
-    border-radius: 50%;
-    color:#6dbafe;
-    background: #2093e6;
+.clickButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 2;
+  width: 276px;
+  height: 276px;
+  border-radius: 50%;
+  color: #6dbafe;
+  background: #2093e6;
 }
-.clockOn{
-    font-size:44px;
+.clockOn {
+  font-size: 44px;
 }
-.clockCan{
-    font-size:44px;
-    color:#fff;
+.clockCan {
+  font-size: 44px;
+  color: #fff;
 }
-.clockDate{
-    font-size:30px;
+.clockDate {
+  font-size: 30px;
 }
-.prompt{
-    vertical-align:bottom;
+.prompt {
+  vertical-align: bottom;
 }
-.promptImg{
-    display:inline-block;
-    width:32px;
-    height: 32px;
+.promptImg {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
 }
-.text{
-    display:inline-block;
-    position:relative;
-    top:-4px;
-    left:0;
-    margin-left:10px;
+.text {
+  display: inline-block;
+  position: relative;
+  top: -4px;
+  left: 0;
+  margin-left: 10px;
 }
-.refreshHide{
-    width:376px;
-    height:70px;
-    border: 3px solid #f0f8fd;
-    border-radius:3px;
-    line-height: 70px;
-    text-align: center;
-    font-size:26px;
-    color:#f0f8fd;
-    margin:120px 0 22px;
+.refreshHide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 376px;
+  height: 70px;
+  border: 3px solid #f0f8fd;
+  border-radius: 3px;
+  /* line-height: 70px; */
+  /* text-align: center; */
+  font-size: 26px;
+  color: #f0f8fd;
+  margin: 120px 0 22px;
 }
-.refreshShow{
-    width:376px;
-    height:70px;
-    border: 3px solid #2093e6;
-    border-radius:3px;
-    line-height: 70px;
-    text-align: center;
-    font-size:26px;
-    color:#2093e6;
-    margin:120px 0 22px;
+.refreshShow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 376px;
+  height: 70px;
+  border: 3px solid #2093e6;
+  border-radius: 3px;
+  /* line-height: 70px; */
+  /* text-align: center; */
+  font-size: 26px;
+  color: #2093e6;
+  margin: 120px 0 22px;
 }
-.promptText{
-    font-size:24px;
-    color:#888;
-    margin-bottom:260px;
+.promptText {
+  font-size: 24px;
+  color: #888;
+  margin-bottom: 260px;
 }
-.tabBox{
-    position:fixed;
-    left:0;
-    bottom:0;
-    width:100%;
-    height:98px;
-    padding:12px 0 18px;
-    border-top:1px solid #ededed;
-    background: #fff;
+.tabBox {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 98px;
+  padding: 12px 0 18px;
+  border-top: 1px solid #ededed;
+  background: #fff;
 }
-.tab{
-    display:inline-block;
-    text-align: center;
-    width:50%;
-    height:100%;
+.tab {
+  display: inline-block;
+  text-align: center;
+  width: 50%;
+  height: 100%;
 }
-.tabImg{
-    display:inline-block;
-    width:48px;
-    height:48px;
+.tabImg {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
 }
 /* .mask {
     z-index: 3;
