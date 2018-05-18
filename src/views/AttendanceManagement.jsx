@@ -137,7 +137,7 @@ class AttendanceManagement extends Component {
     if (adminRegister && adminRegister === "Y") {
       // this.props.history.replace("/qrCode/" + window.sessionStorage.getItem("codeUrl") + "/" + window.sessionStorage.getItem("LoginName"));
       this.props.history.replace("/userCenter/" + window.sessionStorage.getItem("LoginName") + "/" + window.sessionStorage.getItem("companyid"));
-    } else this.props.history.goBack();
+    }
   }
   render() {
     const { status, iconState1, iconState2, tipState } = this.state;

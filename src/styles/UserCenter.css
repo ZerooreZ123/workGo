@@ -261,6 +261,7 @@
   width: 311px;
   height: 311px;
   -webkit-animation: circle 1s infinite linear;
+  transform-origin: 50% 50%;
 }
 .circular {
   z-index: 1;

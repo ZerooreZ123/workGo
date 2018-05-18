@@ -61,7 +61,7 @@
 }
 .timetable {
   position: fixed;
-  top: 110px;
+  top: 108px;
   left: 0;
   display: flex;
   justify-content: space-around;
