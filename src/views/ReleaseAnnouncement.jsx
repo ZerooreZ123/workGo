@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import DayPicker from "react-day-picker";
-import lrz from "lrz";
 import Toast from "../components/Toast";
 import Alert from "../components/Alert";
 
@@ -30,7 +29,7 @@ class ReleaseAnnouncement extends Component {
       selectedDay: "", //开始选择时间
       mask: false, //日历开始遮罩
       copyMask: false,
-      imgSrcConcat: [], //拼接字符串
+      // imgSrcConcat: [], //拼接字符串
       imgBox: JSON.parse(window.sessionStorage.getItem("img")) || [], //图片盒子
       announcementTitle: window.sessionStorage.getItem("title") || "",
       announcementContent: window.sessionStorage.getItem("content") || ""
@@ -56,9 +55,9 @@ class ReleaseAnnouncement extends Component {
   }
   back = () => {
     if (!this.isBack) {
-      window.sessionStorage.removeItem("title", this.state.announcementTitle);
-      window.sessionStorage.removeItem("content", this.state.announcementContent);
-      window.sessionStorage.removeItem("img", JSON.stringify(this.state.imgBox));
+      window.sessionStorage.removeItem("title");
+      window.sessionStorage.removeItem("content");
+      window.sessionStorage.removeItem("img");
       if (this.state.announcementTitle !== "" || this.state.announcementContent !== "" || this.state.imgBox.length > 0) {
         this.setState({ alertState: true });
         this.props.history.push(null, null, document.URL);
@@ -79,9 +78,9 @@ class ReleaseAnnouncement extends Component {
       window.sessionStorage.setItem("content", this.state.announcementContent);
       window.sessionStorage.setItem("img", JSON.stringify(this.state.imgBox));
     } else {
-      window.sessionStorage.removeItem("title", this.state.announcementTitle);
-      window.sessionStorage.removeItem("content", this.state.announcementContent);
-      window.sessionStorage.removeItem("img", JSON.stringify(this.state.imgBox));
+      window.sessionStorage.removeItem("title");
+      window.sessionStorage.removeItem("content");
+      window.sessionStorage.removeItem("img");
     }
     this.isBack = true;
     this.props.history.goBack();
@@ -152,9 +151,9 @@ class ReleaseAnnouncement extends Component {
   }
   delete(i) {
     this.state.imgBox.splice(i, 1);
-    this.state.imgSrcConcat.splice(i, 1);
+    // this.state.imgSrcConcat.splice(i, 1);
     this.setState({ imgBox: this.state.imgBox });
-    this.setState({ imgSrcConcat: this.state.imgSrcConcat });
+    // this.setState({ imgSrcConcat: this.state.imgSrcConcat });
   }
   getBase64(callback) {
     //获取图片
@@ -191,17 +190,17 @@ class ReleaseAnnouncement extends Component {
     const result = await XHR.post(window.admin + API.upload, { imgStr: stringBase64 });
     if (JSON.parse(result).success === "T") {
       const imgSrc = window.imgServer + JSON.parse(result).data.slice(1);
-      this.state.imgSrcConcat.push(JSON.parse(result).data);
+      // this.state.imgSrcConcat.push(JSON.parse(result).data);
       this.state.imgBox.push(imgSrc);
 
       if (this.state.imgBox.length > 9) {
-        this.setState({ imgBox: this.state.imgBox.slice(0, 9), imgSrcConcat: this.state.imgSrcConcat.slice(0, 9), tipState1: true });
+        this.setState({ imgBox: this.state.imgBox.slice(0, 9), tipState1: true }); // imgSrcConcat: this.state.imgSrcConcat.slice(0, 9),
         setTimeout(() => {
           this.setState({ tipState1: false });
         }, 2000);
       } else {
         this.setState({ imgBox: this.state.imgBox });
-        this.setState({ imgSrcConcat: this.state.imgSrcConcat });
+        // this.setState({ imgSrcConcat: this.state.imgSrcConcat });
       }
     } else {
       alert(JSON.parse(result).msg);
@@ -210,12 +209,16 @@ class ReleaseAnnouncement extends Component {
   async announce() {
     //发布公告
     if (this.state.imgBox.length > 0) {
+      var photoSrc = [];
+      this.state.imgBox.forEach(e => {
+        photoSrc.push("|" + (e.length > 44 ? e.substr(e.length - 44, 44) : e));
+      });
       const result = await XHR.post(window.admin + API.announce, {
         userid: window.sessionStorage.getItem("id"),
         companyid: window.sessionStorage.getItem("companyid"),
         title: this.state.announcementTitle,
         content: this.state.announcementContent,
-        image: this.state.imgSrcConcat.join(""),
+        image: photoSrc.join(""),
         startDate: this.state.selectedDay + " 00:00:00",
         endDate: this.state.chooseDay + " 23:59:59"
       });
@@ -223,6 +226,9 @@ class ReleaseAnnouncement extends Component {
         window.sessionStorage.setItem("backTip", true);
         this.isBack = true;
         this.props.history.push("/historyAnnouncement");
+        window.sessionStorage.removeItem("title");
+        window.sessionStorage.removeItem("content");
+        window.sessionStorage.removeItem("img");
       } else {
         alert(JSON.parse(result).msg);
       }

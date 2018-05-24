@@ -42,13 +42,14 @@
   color: #000;
   background: transparent;
   text-shadow: 0px 0px 0px #000;
-  /* -webkit-text-fill-color: transparent; */
   outline: none;
   border: none;
-  -webkit-appearance: none;
+  appearance: none;
 }
 .inputBox::-webkit-input-placeholder {
   color: #b0b0b0;
+  line-height: 48px;
+  /* vertical-align: center; */
 }
 .cleanButton {
   width: 33px;

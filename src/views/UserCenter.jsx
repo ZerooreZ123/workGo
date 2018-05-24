@@ -438,11 +438,13 @@ class UserCenter extends Component {
               }, 2000);
             }
           );
-        } else {
+        } else if (result.state.toString() === "poweredOff") {
           this.setState({ prompt: 2 });
+        } else {
+          this.searchIbeacons();
         }
       });
-    }, 1000);
+    }, 2000);
   }
   unbindUser() {
     //解绑员工二次确认
@@ -529,7 +531,7 @@ class UserCenter extends Component {
                   <div className={styles.phone}>{dataSource.phone}</div>
                   <div className={styles.company}>
                     <span>{dataSource.companyName}</span>
-                    <span>{dataSource.officeName ? "/" + dataSource.officeName : ""}</span>
+                    <span>{dataSource.officeName ? "/" + dataSource.officeName : "/其他"}</span>
                   </div>
                 </div>
               </div>

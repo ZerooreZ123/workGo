@@ -30,6 +30,7 @@ class LoginJump extends Component {
     window.workgo.getUserInfo(result => {
       const phone = result.mobile;
       const workid = result.userId;
+      window.goGoPhone = result.mobile;
       this.judgeUser(workid, phone);
     });
   }

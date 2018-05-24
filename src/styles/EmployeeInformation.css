@@ -33,14 +33,18 @@
 .searchBox > input {
   display: inline-block;
   width: 70%;
-  /* height:36px; */
+  height: 36px;
   padding: 0;
   font-size: 34px;
   color: #000;
   background: transparent;
   outline: none;
   border: none;
-  -webkit-appearance: none;
+  appearance: none;
+}
+.inputBox::-webkit-input-placeholder {
+  color: #b0b0b0;
+  line-height: 39px;
 }
 .search {
   display: inline-block;
@@ -102,7 +106,7 @@
   /* text-align: center; */
   /* line-height: 102px; */
   font-size: 32px;
-  color: #2e79ca;
+  color: #2295e8;
   background: #fff;
 }
 .top {
@@ -192,7 +196,4 @@
 }
 .hideContent {
   display: none;
-}
-.inputBox::-webkit-input-placeholder {
-  color: #b0b0b0;
 }

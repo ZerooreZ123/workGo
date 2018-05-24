@@ -248,6 +248,11 @@
 }
 .clickClock {
   margin: 270px 0 46px;
+  /* width: 450px;
+  height: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
   position: relative;
 }
 .cardFinish {
@@ -260,8 +265,7 @@
   position: relative;
   width: 311px;
   height: 311px;
-  -webkit-animation: circle 1s infinite linear;
-  transform-origin: 50% 50%;
+  animation: circle 2.5s infinite linear;
 }
 .circular {
   z-index: 1;
@@ -284,9 +288,15 @@
 @-webkit-keyframes circle {
   0% {
     transform: rotate(0deg);
+    transform-origin: center center;
+  }
+  50% {
+    transform: rotate(180deg);
+    transform-origin: center center;
   }
   100% {
     transform: rotate(360deg);
+    transform-origin: center center;
   }
 }
 .clickButton {
